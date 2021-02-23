@@ -3,13 +3,14 @@ const container = document.getElementById('gridContainer');
 const reset = document.getElementById('reset');
 const blackBtn = document.getElementById('black');
 const retroBtn = document.getElementById('retro');
+const sizeBtn = document.getElementById('sizer');
+let gridSize = 16;
 
 
 
-for (i=0; i < 256; i++) {
+for (i=0; i < (gridSize*gridSize); i++) {
     childDiv = document.createElement('div');
-    
-    childDiv.setAttribute('id', 'newDiv'+i);
+
     childDiv.setAttribute('class', 'grid-item');
 
     container.append(childDiv);  
@@ -21,7 +22,7 @@ function clear() {
 
     childDivs = document.querySelectorAll('.grid-item');
 
-    for (i=0; i < 256; i++) {
+    for (i=0; i < (gridSize*gridSize); i++) {
         
         childDivs[i].style.backgroundColor ="white";   
 }}
@@ -43,6 +44,39 @@ function paintBlack(){
     
 }
 
+function prompter(){
+    
+    chooseSize = true;
+
+    while (chooseSize) { 
+
+        gridSize = prompt("Please enter a number of squares you'd like in the grid between 10 and 100");
+
+        if (gridSize < 10 || gridSize > 100) {
+            alert("Incorrect number. Please Try again.")
+        }
+
+        else {
+            chooseSize = false;
+
+            container.textContent = "";
+
+            container.style.gridTemplateColumns = `repeat(${gridSize}, 1fr)`;
+        
+            console.log(container);
+
+            for (i=0; i < (gridSize*gridSize); i++) {
+                childDiv = document.createElement('div');
+                
+                childDiv.setAttribute('class', 'grid-item');
+    
+                container.append(childDiv);  
+                }     
+        }}
+
+        
+}
+
 container.addEventListener("mouseover", function(event) {
     event.target.style.backgroundColor = 'black';
   });
@@ -53,8 +87,6 @@ blackBtn.addEventListener("click", paintBlack);
 
 retroBtn.addEventListener("click", paintRetro);
 
-
-
-
+sizeBtn.addEventListener("click", prompter);
 
 
